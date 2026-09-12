@@ -21,11 +21,15 @@ wmake
 ```
 
 Requires Open Watcom v2 with `wcl` (NOT `wcl386` - this is a 16-bit real
-mode target, no DOS/4GW extender). Produces `RTL8169P.EXE`,
-`RTLDEBUG.EXE`, and (Windows only, via PowerShell `Compress-Archive` in
-`src/Makefile`) `RTL8169P.ZIP` containing `RTL8169P.EXE` plus the three
-root-level docs. From the workspace root in VS Code, `Ctrl+Shift+B` runs
-the equivalent build task (`.vscode/tasks.json`).
+mode target, no DOS/4GW extender). Produces `RTL8169P.EXE` and
+`RTLDEBUG.EXE` in the repository root (not `src/` - only source and
+intermediate `.obj` files stay there), plus (Windows only, via
+PowerShell `Compress-Archive` in `src/Makefile`) `RTL8169P.ZIP`,
+also in the root, containing `RTL8169P.EXE` plus the four root-level
+docs (README/DESIGN/FILE_ID.DIZ/LICENSE). From the workspace root in
+VS Code, `Ctrl+Shift+B` runs the equivalent build task
+(`.vscode/tasks.json`). `.gitignore` excludes `*.obj` only - the built
+`.EXE`/`.ZIP` files are not excluded.
 
 - **`RTL8169P.EXE`** (`src/main.c`) - stripped-down "production" build.
   Load-time options only (`-t`/`-r`/`-g`/`-m`) plus `-u`.

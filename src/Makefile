@@ -16,7 +16,9 @@
 # -k4096  : explicit 4KB stack (LFLAGS only - see below for why)
 #
 # Builds TWO executables from the same underlying driver code
-# (pci.c/rtl8169p.c/pktdrv.c, unchanged either way):
+# (pci.c/rtl8169p.c/pktdrv.c, unchanged either way), both placed in the
+# repository ROOT (not here in src/, where only the intermediate .obj
+# files and this Makefile live):
 #   RTL8169P.EXE - stripped-down "production" build (main.c). Only
 #                  load-time options (-t/-r/-c/-g/-m) plus -u.
 #   RTLDEBUG.EXE  - full-featured build (rtldebug.c), adds -s/-d
@@ -26,15 +28,14 @@
 # for the build most people keep loaded) and why either executable can
 # talk to a driver instance regardless of which one loaded it.
 #
-# Also produces RTL8169P.ZIP - a ready-to-distribute archive of
-# RTL8169P.EXE plus the four root-level docs (README.md/DESIGN.md/
-# FILE_ID.DIZ/LICENSE), built via PowerShell's Compress-Archive. Windows-
-# only
-# (uses "powershell" directly) - if you build on a different host,
-# either skip the $(ZIP_TARGET) prerequisite below or replace that one
-# recipe line with your platform's own zip tool. RTLDEBUG.EXE is
-# deliberately left OUT of this archive - it is the developer/diagnostic
-# build, not part of the normal distribution.
+# Also produces ../RTL8169P.ZIP (repository root) - a ready-to-
+# distribute archive of RTL8169P.EXE plus the four root-level docs
+# (README.md/DESIGN.md/FILE_ID.DIZ/LICENSE), built via PowerShell's
+# Compress-Archive. Windows-only (uses "powershell" directly) - if you
+# build on a different host, either skip the $(ZIP_TARGET) prerequisite
+# below or replace that one recipe line with your platform's own zip
+# tool. RTLDEBUG.EXE is deliberately left OUT of this archive - it is
+# the developer/diagnostic build, not part of the normal distribution.
 #
 # Build everything (both executables + the zip):
 #   wmake
@@ -54,9 +55,9 @@ CFLAGS  = -3 -ms -bt=dos -zq -oe
 # corruption, not a clean crash.
 LFLAGS  = -bt=dos -k4096
 
-DRIVER_TARGET = RTL8169P.EXE
-DEBUG_TARGET  = RTLDEBUG.EXE
-ZIP_TARGET    = RTL8169P.ZIP
+DRIVER_TARGET = ..\RTL8169P.EXE
+DEBUG_TARGET  = ..\RTLDEBUG.EXE
+ZIP_TARGET    = ..\RTL8169P.ZIP
 
 SHARED_OBJS = pci.obj rtl8169p.obj pktdrv.obj
 
@@ -72,7 +73,7 @@ $(DEBUG_TARGET): rtldebug.obj $(SHARED_OBJS)
 # which wmake only rebuilds when something actually changed) - harmless,
 # since Compress-Archive with -Force just overwrites the same output.
 $(ZIP_TARGET): $(DRIVER_TARGET)
-	powershell -NoProfile -Command "Compress-Archive -LiteralPath 'RTL8169P.EXE','..\README.md','..\DESIGN.md','..\FILE_ID.DIZ','..\LICENSE' -DestinationPath 'RTL8169P.ZIP' -Force"
+	powershell -NoProfile -Command "Compress-Archive -LiteralPath '..\RTL8169P.EXE','..\README.md','..\DESIGN.md','..\FILE_ID.DIZ','..\LICENSE' -DestinationPath '..\RTL8169P.ZIP' -Force"
 
 main.obj: main.c rtl8169p.h pktdrv.h
 	$(CC) $(CFLAGS) -c main.c

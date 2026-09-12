@@ -44,7 +44,8 @@ cd src
 wmake
 ```
 
-This produces two executables from the same underlying driver code:
+This produces two executables, both placed in the repository ROOT (not
+`src/`, where only the source and intermediate `.obj` files live):
 `RTL8169P.EXE` (the stripped-down "production" build - only load-time
 options plus `-u`) and `RTLDEBUG.EXE` (the full-featured build, adding
 `-s`/`-d`). See "Usage" below and "Design notes" in `DESIGN.md` for why
@@ -54,9 +55,9 @@ target). All source (`.c`/`.h`) and the `Makefile` live under `src/`;
 this file, `DESIGN.md` and `FILE_ID.DIZ` stay in the repository root, so
 they render normally on GitHub's repo landing page.
 
-The build also produces `RTL8169P.ZIP` (Windows only, via PowerShell's
-`Compress-Archive` - see `src/Makefile`) alongside the two `.EXE` files:
-a ready-to-distribute archive containing `RTL8169P.EXE` plus this file,
+The build also produces `RTL8169P.ZIP` in the repository root (Windows
+only, via PowerShell's `Compress-Archive` - see `src/Makefile`): a
+ready-to-distribute archive containing `RTL8169P.EXE` plus this file,
 `DESIGN.md`, `FILE_ID.DIZ` and `LICENSE`. `RTLDEBUG.EXE` is deliberately
 left out of it - it is the developer/diagnostic build, not part of the
 normal distribution.
@@ -247,9 +248,12 @@ choices.
 | `src/pci.c/.h`     | PCI BIOS (INT 1Ah) detection and configuration access |
 | `src/rtl8169p.c/.h`| Chip register map, init, TX/RX descriptor rings, PHY/MDIO |
 | `src/pktdrv.c/.h`  | INT 60h dispatcher, hardware IRQ ISR, RX upcall to the application |
-| `src/Makefile`     | Open Watcom build file (builds both executables + `RTL8169P.ZIP`) |
+| `src/Makefile`     | Open Watcom build file (builds `../RTL8169P.EXE`, `../RTLDEBUG.EXE`, `../RTL8169P.ZIP`) |
+| `RTL8169P.EXE`     | Build output (see `src/Makefile`) |
+| `RTLDEBUG.EXE`     | Build output (see `src/Makefile`) |
 | `.claude/CLAUDE.md`| Developer-facing project context, auto-loaded by Claude Code |
 | `.vscode/`         | VS Code build task (Ctrl+Shift+B) - see "Building" above |
+| `.gitignore`       | Excludes `*.obj` (intermediate build files) |
 | `DESIGN.md`        | Detailed design notes and debugging/investigation history |
 | `FILE_ID.DIZ`      | Short BBS/archive-style description of the project |
 | `LICENSE`          | GNU General Public License v3.0 (full text) |
