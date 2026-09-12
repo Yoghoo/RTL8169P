@@ -34,7 +34,7 @@ anything serious.
 - A Realtek RTL8169 (PCI vendor:device `10ec:8169`) network card.
 - [Open Watcom v2](https://github.com/open-watcom/open-watcom-v2), 16-bit
   DOS target (`wcl`, not `wcl386`).
-- DOS or a DOS-compatible environment (tested with FreeDOS). See
+- DOS or a DOS-compatible environment (tested with MS-DOS version 7.10). See
   "Testing" below for why you need real hardware, not an emulator.
 
 ## Building
