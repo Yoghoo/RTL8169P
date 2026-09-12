@@ -1,0 +1,8 @@
+RTL8169 packet driver for DOS, version 0.8.1
+Copyright (c) 2026 by Yoghoo
+
+INT 60h driver for the Realtek RTL8169 PCI
+gigabit NIC. 10/100/1000 auto-negotiation, 
+tested on real hardware.
+
+Free software (GPLv3), no warranty.
