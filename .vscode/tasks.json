@@ -1,0 +1,51 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build (wmake)",
+            "type": "shell",
+            "command": "wmake",
+            "options": {
+                "cwd": "${workspaceFolder}/src"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": {
+                "owner": "watcom-c",
+                "fileLocation": ["relative", "${workspaceFolder}/src"],
+                "pattern": {
+                    "regexp": "^(.*)\\((\\d+)\\):\\s+(Error|Warning)!\\s+(\\w+):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "severity": 3,
+                    "code": 4,
+                    "message": 5
+                }
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "Builds RTL8169P.EXE, RTLDEBUG.EXE, and RTL8169P.ZIP via src/Makefile. Requires Open Watcom v2 (wcl/wmake) on PATH - see README.md."
+        },
+        {
+            "label": "Clean (wmake clean)",
+            "type": "shell",
+            "command": "wmake clean",
+            "options": {
+                "cwd": "${workspaceFolder}/src"
+            },
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "Removes built .obj/.exe/.zip files."
+        }
+    ]
+}
