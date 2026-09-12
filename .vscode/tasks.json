@@ -3,8 +3,9 @@
     "tasks": [
         {
             "label": "Build (wmake)",
-            "type": "shell",
-            "command": "wmake",
+            "type": "process",
+            "command": "powershell",
+            "args": ["-NoProfile", "-Command", "wmake clean; wmake"],
             "options": {
                 "cwd": "${workspaceFolder}/src"
             },
@@ -29,7 +30,7 @@
                 "panel": "shared",
                 "clear": true
             },
-            "detail": "Builds RTL8169P.EXE, RTLDEBUG.EXE, and RTL8169P.ZIP via src/Makefile. Requires Open Watcom v2 (wcl/wmake) on PATH - see README.md."
+            "detail": "Runs 'wmake clean' first, then 'wmake' - builds RTL8169P.EXE, RTLDEBUG.EXE, and RTL8169P.ZIP via src/Makefile. Always cleans first since wmake's timestamp-based staleness check can be unreliable on network drives. Requires Open Watcom v2 (wcl/wmake) on PATH - see README.md."
         },
         {
             "label": "Clean (wmake clean)",
